@@ -18,7 +18,7 @@ In this project, I implement the Debezium service programmatically, and run via 
 <br>
 
 ## HOW TO TEST
-1. Spin up a Docker PostgreSQL instance by setting the only required property to enable the database usage by Debezium, i.e. `wal_level = logical`:
+1. Spin up a Docker PostgreSQL instance by setting the only required property to enable the database usage by Debezium, `wal_level = logical`.
 ```shell
 $ docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 --rm -it postgres:11-alpine3.16 -c wal_level=logical
 ```
@@ -52,7 +52,7 @@ CREATE TABLE customer ( id SERIAL PRIMARY KEY, email VARCHAR(255), fullname VARC
 ./mvnw spring-boot:run
 ```
 
-6. Back to the Docker terminal, insert some data into the `customerdb` table:
+6. From the Docker terminal, insert some data into the `customerdb` table:
 ```shell
 INSERT INTO customer (email, fullname) VALUES ('john.doe@acme.com', 'John Doe');
 ```
