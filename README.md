@@ -34,25 +34,30 @@ For more information visit this [link](https://postgresqlco.nf/doc/en/param/wal_
 docker exec -it postgres bash
 ```
 
-3. Once inside, create the database and table to run the demo application:
+3. Create the `customerdb` database:
 ```shell
 createdb -h localhost -p 5432 -U postgres customerdb;
+```
+
+4. Create the `customer` table:
+```shell
+psql customerdb -U postgres
 ```
 ```shell
 CREATE TABLE customer ( id SERIAL PRIMARY KEY, email VARCHAR(255), fullname VARCHAR(255) );
 ```
 
-4. From another terminal, run the application:
+5. From another terminal, run the application:
 ```shell
 ./mvnw spring-boot:run
 ```
 
-5. Back to the Docker terminal, insert some data into the `customerdb` table:
+6. Back to the Docker terminal, insert some data into the `customerdb` table:
 ```shell
 INSERT INTO customer (email, fullname) VALUES ('john.doe@acme.com', 'John Doe');
 ```
 
-6. From the application's console, you should see a data insertion event log similar to the one below:
+7. From the application's console, you should see a data insertion event log similar to the one below:
 ```log
 2022-09-19 15:21:53.172  INFO 657338 --- [pool-1-thread-1] i.d.connector.common.BaseSourceTask      : 1 records sent during previous 00:00:27.822, last recorded offset: {transaction_id=null, lsn_proc=23627000, lsn=23627000, txId=598, ts_usec=1663611712485733}
 2022-09-19 15:21:53.180  INFO 657338 --- [pool-1-thread-1] i.d.listener.DebeziumListener            : Key = Struct{id=9}, Value = Struct{after=Struct{email=john.doe@acme.com,fullname=John Doe},source=Struct{version=1.9.4.Final,connector=postgresql,name=customer-postgres-db-server,ts_ms=1663611712485,db=customerdb,sequence=[null,"23627000"],schema=public,table=customer,txId=598,lsn=23627000},op=c,ts_ms=1663611712770}
